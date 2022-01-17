@@ -7,7 +7,6 @@ use \Magento\Framework\View\Element\Template\Context;
 class Registration extends \Magento\Framework\View\Element\Template
 {
     protected $_helper;
-    protected $context;
 
     public function __construct(
         Context $context,

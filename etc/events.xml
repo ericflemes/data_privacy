@@ -3,4 +3,7 @@
     <event name="adminhtml_customer_save_after">
         <observer name="adminhtml_customer_data_privacy" instance="Elemes\DataPrivacy\Observer\CustomSaveAfter"/>
     </event>
+    <event name="customer_register_success">
+        <observer name="customer_data_privacy" instance="Elemes\DataPrivacy\Observer\CustomSaveAfter" />
+    </event>
 </config>
