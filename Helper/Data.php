@@ -57,20 +57,21 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getModalRangesDecode()
     {
         return $this->serializer->unserialize($this->_scopeConfig->getValue(self::MODULE_PATH.'ranges',ScopeInterface::SCOPE_STORE));
     }
 
+    /**
+     * @return array
+     */
     public function getValueStandard() {
         $values = $this->getModalRangesDecode();
-
         foreach ($values as $value => $key) {
             $standard[$key['label']] = $key['value'];
         }
-
         return $standard;
     }
 }

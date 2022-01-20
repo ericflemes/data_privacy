@@ -19,4 +19,8 @@ class Registration extends \Magento\Framework\View\Element\Template
     public function getModuleStatus() {
         return $this->_helper->getIsModuleEnable();
     }
+
+    public function getFields() {
+        return $this->_helper->getModalRangesDecode();
+    }
 }
