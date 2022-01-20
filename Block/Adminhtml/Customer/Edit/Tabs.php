@@ -39,6 +39,10 @@ class Tabs extends Generic implements TabInterface
      */
     protected $_privacy;
 
+    const label = 'label';
+    const name = 'name';
+    const value = 'value';
+
     /**
      * @param \Magento\Backend\Block\Template\Context $context
      * @param \Magento\Framework\Registry $registry
@@ -93,7 +97,7 @@ class Tabs extends Generic implements TabInterface
     {
         foreach ($valueCustomer as $key => $value) {
             foreach ($valuesForm as $value2) {
-                if ($value2['name'] == $key) {
+                if ($value2[self::name] == $key) {
                     unset($valueCustomer[$key]);
                 }
             }
@@ -101,9 +105,9 @@ class Tabs extends Generic implements TabInterface
         if(count($valueCustomer)>= 1) {
             foreach ($valueCustomer as $key => $item)
             {
-                $formFilds["customer"]['name']  = $key;
-                $formFilds["customer"]['value'] = $item;
-                $formFilds["customer"]['label'] = ucwords($key);
+                $formFilds["customer"][self::name]  = $key;
+                $formFilds["customer"][self::value] = $item;
+                $formFilds["customer"][self::label] = ucwords($key);
             }
             return $formFilds;
         }
@@ -118,8 +122,8 @@ class Tabs extends Generic implements TabInterface
     public function selectValue(array $valueCustomer, array $field)
     {
         foreach ($valueCustomer as $value => $key) {
-            if ($value == $field['name']) {
-                $field['value'] = $key;
+            if ($value == $field[self::label]) {
+                $field[self::value] = $key;
             }
         }
         return $field;
@@ -153,14 +157,14 @@ class Tabs extends Generic implements TabInterface
                     $field = $this->selectValue($valueCustomer, $field);
                 }
                 $fieldset->addField(
-                    $field['name'],
+                    $field[self::name],
                     'select',
                     [
-                        'name' => "customer_privacy[".$field['name']."]",
+                        'name' => "customer_privacy[".$field[self::label]."]",
                         'data-form-part' => 'customer_form',
-                        'label' => $field['label'],
-                        'title' => $field['label'],
-                        'value' => $field['value'],
+                        'label' => $field[self::label],
+                        'title' => $field[self::label],
+                        'value' => $field[self::value],
                         'values' => array(
                             array(
                                 'value' => 1,
