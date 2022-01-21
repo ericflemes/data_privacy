@@ -97,7 +97,7 @@ class Tabs extends Generic implements TabInterface
     {
         foreach ($valueCustomer as $key => $value) {
             foreach ($valuesForm as $value2) {
-                if ($value2[self::name] == $key) {
+                if ($value2[self::label] == $key) {
                     unset($valueCustomer[$key]);
                 }
             }
