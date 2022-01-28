@@ -1,0 +1,56 @@
+<?php /** @var Elemes\DataPrivacy\Block\Customer\Index $block */ ?>
+<fieldset class="fieldset">
+    <legend class="legend"><span>
+        <?php /* @escapeNotVerified */
+        echo __('Acceptance of use of personal data') ?></span>
+    </legend>
+    <div class="field">
+        <?php /* @escapeNotVerified */
+        echo __('    According to the General Personal Data Protection Law (LGPD), in order for your personal data to be safe and to be used only for the benefits you want, you must consent to their use by clicking below.'); ?>
+    </div>
+    <div class="field">
+        <div class="field">
+            <b> <?php /* @escapeNotVerified */
+                echo __('Where do you accept communication?') ?>
+            </b>
+        </div>
+        </br>
+        <div class="field" id="edit_privacy">
+            <form class="form form-data-privacy" action=""
+                  method="post" id="form-validate">
+                <?php foreach ($block->getFields() as $key => $field): ?>
+                    <div class="field required" id="edit_privacy_line_<?php echo $field['label']; ?>">
+                        <label for="data" class="label">
+                            <span>
+                                <b><?php echo ucfirst($field['name']); ?></b>
+                            </span>
+                        </label>
+                        <p>
+                            <?php /* @escapeNotVerified */
+                            echo __('I do not accept') ?>
+                            <input type="radio" name="customer_privacy[<?php echo $field['label']; ?>]"
+                                   id="no_<?php echo $field['label']; ?>"
+                                   data-qa="no_<?php echo $field['label']; ?>" value="0"
+                                   data-validate="{required:1}">
+                            <?php /* @escapeNotVerified */
+                            echo __('Accepted') ?>
+                            <input type="radio" name="customer_privacy[<?php echo $field['label']; ?>]"
+                                   id="<?php echo $field['label']; ?>"
+                                   data-qa="<?php echo $field['label']; ?>" value="1" data-validate="{required:1}">
+                        </p>
+                    </div>
+                <?php endforeach; ?>
+                <button type="submit" title="Save" class="action save primary"><span>Save</span></button>
+            </form>
+        </div>
+        <hr/>
+        <div class="field">
+            <?php /* @escapeNotVerified */
+            echo __('You can change your choices at any time under'); ?>
+            <b><?php /* @escapeNotVerified */
+                echo __('Data Privacy'); ?></b>
+            <?php /* @escapeNotVerified */
+            echo __('in your account settings.'); ?>
+        </div>
+    </div>
+</fieldset>
