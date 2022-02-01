@@ -1,4 +1,6 @@
 <?php /** @var Elemes\DataPrivacy\Block\Customer\Index $block */ ?>
+<?php
+$data = $block->getPrivacy(); ?>
 <fieldset class="fieldset">
     <legend class="legend"><span>
         <?php /* @escapeNotVerified */
@@ -31,12 +33,20 @@
                             <input type="radio" name="customer_privacy[<?php echo $field['label']; ?>]"
                                    id="no_<?php echo $field['label']; ?>"
                                    data-qa="no_<?php echo $field['label']; ?>" value="0"
-                                   data-validate="{required:1}">
+                                   data-validate="{required:1}"
+                            <?php
+                            if(array_key_exists($field['label'],$data)) {
+                                if(!$data[$field['label']]) {
+                                    echo 'checked';
+                                }
+                            }
+                            ?>>
                             <?php /* @escapeNotVerified */
                             echo __('Accepted') ?>
                             <input type="radio" name="customer_privacy[<?php echo $field['label']; ?>]"
                                    id="<?php echo $field['label']; ?>"
-                                   data-qa="<?php echo $field['label']; ?>" value="1" data-validate="{required:1}">
+                                   data-qa="<?php echo $field['label']; ?>" value="1" data-validate="{required:1}"
+                                <?php echo $block->getChecked($field['label'], $data); ?>>
                         </p>
                     </div>
                 <?php endforeach; ?>

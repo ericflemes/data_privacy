@@ -3,16 +3,26 @@ namespace Elemes\DataPrivacy\Block\Customer;
 
 use  Elemes\DataPrivacy\Helper\Data;
 use \Magento\Framework\View\Element\Template\Context;
+use \Magento\Framework\View\Element\Template;
+use Elemes\DataPrivacy\Model\Privacy;
+use Magento\Customer\Model\Session;
 
-class Index extends \Magento\Framework\View\Element\Template
+class Index extends Template
 {
+    /*  */
     protected $_helper;
+    protected $privacy;
+    protected $customerSession;
 
-    public function __construct(
+    public function __construct (
         Context $context,
-        Data $_helper
+        Data $_helper,
+        Session $customerSession,
+        Privacy $privacy
     ) {
         $this->_helper = $_helper;
+        $this->customerSession = $customerSession;
+        $this->privacy = $privacy;
         parent::__construct($context);
     }
 
@@ -23,6 +33,15 @@ class Index extends \Magento\Framework\View\Element\Template
     public function getFields() {
         return $this->_helper->getModalRangesDecode();
     }
+
+    public function getPrivacy() {
+        return $this->privacy->getCustomerDataPrivacy($this->customerSession->getCustomerId());
+    }
+
+    public function getChecked($field, $data) {
+        return  $this->_helper->setChecked($field, $data);
+    }
+
 
 }
 

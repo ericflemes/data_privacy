@@ -74,4 +74,14 @@ class Data extends AbstractHelper
         }
         return $standard;
     }
+
+    public function setChecked($field, $data) {
+        $checked = '';
+        if(array_key_exists($field,$data)) {
+            if($data[$field]) {
+                $checked =  'checked';
+            }
+        }
+        return $checked;
+    }
 }
