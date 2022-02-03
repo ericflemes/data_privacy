@@ -9,10 +9,12 @@ use Magento\Customer\Model\Session;
 
 class Index extends Template
 {
-    /*  */
+
     protected $_helper;
     protected $privacy;
     protected $customerSession;
+
+    const FORM = '/privacy/customer/save';
 
     public function __construct (
         Context $context,
@@ -42,6 +44,9 @@ class Index extends Template
         return  $this->_helper->setChecked($field, $data);
     }
 
+    public function getFormAction() {
+        return self::FORM;
+    }
 
 }
 

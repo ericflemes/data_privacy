@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left"
+      xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Data Privacy</title>
+    </head>
+    <update handle="customer_account"/>
+    <body>
+        <referenceBlock name="content">
+            <block template="Elemes_DataPrivacy::index.phtml" class="Elemes\DataPrivacy\Block\Customer\Index" name="privacy_customer_save"/>
+        </referenceBlock>
+    </body>
+</page>

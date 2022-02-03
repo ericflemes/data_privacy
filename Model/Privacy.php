@@ -4,6 +4,9 @@ namespace Elemes\DataPrivacy\Model;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 use Elemes\DataPrivacy\Helper\Data;
+use \Magento\Customer\Model\Customer;
+use \Magento\Customer\Model\ResourceModel\CustomerFactory;
+use Magento\Framework\Serialize\SerializerInterface;
 
 class Privacy
 {
@@ -20,14 +23,30 @@ class Privacy
      */
     protected $_helper;
 
+    protected $customer;
+
+    protected $customerFactory;
+
+    /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+
+
     public function __construct(
         CustomerRepositoryInterface $customerRepositoryInterface,
         Json $json,
-        Data $helper
+        Data $helper,
+        Customer $customer,
+        CustomerFactory $customerFactory,
+        SerializerInterface $serializer
     ) {
         $this->customerRepositoryInterface = $customerRepositoryInterface;
         $this->json = $json;
         $this->_helper = $helper;
+        $this->customer = $customer;
+        $this->customerFactory = $customerFactory;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -66,6 +85,36 @@ class Privacy
             return $this->json->serialize($this->_helper->getModalRanges());
         }
         return $this->json->unserialize($this->_helper->getModalRanges());
+    }
+
+    public function setDataPrivacy($param, $customerId) {
+        if(empty($param['customer_privacy'])) {
+            return false;
+        }
+
+        try {
+            $customer = $this->customer->load($customerId);
+            $this->setPrivacy($customer, $param['customer_privacy']);
+            if($customer->save()) {
+                return true;
+            }
+
+        } catch ( Exception $e) {
+            return false;
+        }
+
+    }
+
+    /**
+     * @param Customer $customer
+     * @param $customer_privacy
+     * @return void
+     */
+    public function setPrivacy(Customer $customer, $customer_privacy) {
+        $customerData = $customer->getDataModel();
+        $data_privacy = $this->serializer->serialize($customer_privacy);
+        $customerData->setCustomAttribute('data_privacy', $data_privacy);
+        $customer->updateData($customerData);
     }
 
 }

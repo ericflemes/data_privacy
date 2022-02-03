@@ -1,3 +1,10 @@
+<script type="text/x-magento-init">
+    {
+    "#os-form": {
+    "validation": {}
+    }
+    }
+</script>
 <?php /** @var Elemes\DataPrivacy\Block\Customer\Index $block */ ?>
 <?php
 $data = $block->getPrivacy(); ?>
@@ -18,8 +25,7 @@ $data = $block->getPrivacy(); ?>
         </div>
         </br>
         <div class="field" id="edit_privacy">
-            <form class="form form-data-privacy" action=""
-                  method="post" id="form-validate">
+            <form class="form form-data-privacy" action="<?php /* @escapeNotVerified */ echo $block->getFormAction(); ?>" method="post" id="form-privacy" data-hasrequired="* Required Fields">
                 <?php foreach ($block->getFields() as $key => $field): ?>
                     <div class="field required" id="edit_privacy_line_<?php echo $field['label']; ?>">
                         <label for="data" class="label">
@@ -50,7 +56,7 @@ $data = $block->getPrivacy(); ?>
                         </p>
                     </div>
                 <?php endforeach; ?>
-                <button type="submit" title="Save" class="action save primary"><span>Save</span></button>
+                <button type="submit" title="Save" class="action save primary"><span><?php /* @escapeNotVerified */ echo __('Save'); ?></span></button>
             </form>
         </div>
         <hr/>
