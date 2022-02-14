@@ -84,4 +84,8 @@ class Data extends AbstractHelper
         }
         return $checked;
     }
+
+    public function responseFormatBodyApi($success, $message) {
+        return ['success' => $success, 'message' => $message];
+    }
 }

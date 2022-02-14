@@ -67,12 +67,7 @@ class Privacy
 
     public function setCustomerDataPrivacy($customerId, $data)
     {
-        if (empty($customerId)) {
-            return false;
-        }
-
-        print_r($data);
-        die;
+         return $this->setDataPrivacy($data,$customerId);
     }
 
     /**

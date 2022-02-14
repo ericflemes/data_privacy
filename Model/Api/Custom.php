@@ -1,16 +1,20 @@
 <?php
-
 namespace Elemes\DataPrivacy\Model\Api;
 
 use Elemes\DataPrivacy\Model\Privacy;
 use Psr\Log\LoggerInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 use \Magento\Framework\Webapi\Rest\Request;
+use Elemes\DataPrivacy\Helper\Data;
 
 class Custom
 {
     protected $logger;
     protected $privacy;
+    /**
+     * @var \Elemes\DataPrivacy\Helper\Data
+     */
+    protected $helper;
     /**
      * @var \Magento\Framework\Serialize\Serializer\Json
      */
@@ -25,14 +29,15 @@ class Custom
         LoggerInterface $logger,
         Json $json,
         Privacy $privacy,
-        Request $request
-
+        Request $request,
+        Data $helper
     )
     {
         $this->logger = $logger;
         $this->json = $json;
         $this->privacy = $privacy;
         $this->request = $request;
+        $this->helper = $helper;
     }
 
     /**
@@ -43,12 +48,15 @@ class Custom
     {
         $params = $this->request->getBodyParams();
 
-        $value = $this->privacy->setCustomerDataPrivacy($params['customerId'], $params['data']);
         try {
-            // Your Code here
-            $response = ['success' => true, 'message' => _('Saved')];
+            $save = $this->privacy->setCustomerDataPrivacy($params['customerId'], $params['data']);
+            if($save == true) {
+                $response = $this->helper->responseFormatBodyApi(true,__('Saved'));
+            } else {
+                throw new \Exception('Error');
+            }
         } catch (\Exception $e) {
-            $response = ['success' => false, 'message' => $e->getMessage()];
+            $response = $this->helper->responseFormatBodyApi(false, $e->getMessage());
             $this->logger->info($e->getMessage());
         }
         return $this->json->serialize($response);
@@ -56,12 +64,11 @@ class Custom
 
     public function getData($value)
     {
-        $value = $this->privacy->getCustomerDataPrivacy($value['customerId']);
         try {
-            // Your Code here
-            $response = ['success' => true, 'message' => $value];
+            $value = $this->privacy->getCustomerDataPrivacy($value);
+            $response = $this->helper->responseFormatBodyApi(true, $value);
         } catch (\Exception $e) {
-            $response = ['success' => false, 'message' => $e->getMessage()];
+            $response = $this->helper->responseFormatBodyApi(false, $e->getMessage());
             $this->logger->info($e->getMessage());
         }
         return $this->json->serialize($response);
@@ -71,9 +78,9 @@ class Custom
     {
         try {
             $value = $this->privacy->getRanges(false);
-            $response = ['success' => true, 'message' => $value];
+            $response = $this->helper->responseFormatBodyApi(true, $value);
         } catch (\Exception $e) {
-            $response = ['success' => false, 'message' => $e->getMessage()];
+            $response = $this->helper->responseFormatBodyApi(false, $e->getMessage());
             $this->logger->info($e->getMessage());
         }
         return $this->json->serialize($response);
