@@ -9,10 +9,16 @@ use Elemes\DataPrivacy\Helper\Data;
 
 class Custom
 {
+    /**
+     * @var LoggerInterface
+     */
     protected $logger;
+    /**
+     * @var Privacy
+     */
     protected $privacy;
     /**
-     * @var \Elemes\DataPrivacy\Helper\Data
+     * @var Data
      */
     protected $helper;
     /**
@@ -25,14 +31,20 @@ class Custom
      */
     protected $request;
 
+    /**
+     * @param LoggerInterface $logger
+     * @param Json $json
+     * @param Privacy $privacy
+     * @param Request $request
+     * @param Data $helper
+     */
     public function __construct(
         LoggerInterface $logger,
         Json $json,
         Privacy $privacy,
         Request $request,
         Data $helper
-    )
-    {
+    ) {
         $this->logger = $logger;
         $this->json = $json;
         $this->privacy = $privacy;
@@ -41,15 +53,14 @@ class Custom
     }
 
     /**
-     * @inheritdoc
+     * @return mixed
      */
-
     public function setData()
     {
         $params = $this->request->getBodyParams();
 
         try {
-            $save = $this->privacy->setCustomerDataPrivacy($params['customerId'], $params['data']);
+            $save = $this->privacy->setDataPrivacy($params['data'], $params['customerId']);
             if($save == true) {
                 $response = $this->helper->responseFormatBodyApi(true,__('Saved'));
             } else {
@@ -62,6 +73,10 @@ class Custom
         return $this->json->serialize($response);
     }
 
+    /**
+     * @param $value int
+     * @return mixed
+     */
     public function getData($value)
     {
         try {
@@ -74,6 +89,9 @@ class Custom
         return $this->json->serialize($response);
     }
 
+    /**
+     * @return mixed
+     */
     public function getConfigPrivacy()
     {
         try {

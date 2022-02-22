@@ -5,12 +5,25 @@ use \Magento\Framework\App\Action\Action;
 use \Magento\Framework\App\Action\Context;
 use \Magento\Framework\View\Result\PageFactory;
 use Magento\Customer\Model\Session;
+use Magento\Tests\NamingConvention\true\object;
 
 class Index extends Action
 {
+    /**
+     * @var PageFactory
+     */
     protected $pageFactory;
+    /**
+     * @var Session
+     */
     protected $customerSession;
 
+    /**
+     * Data constructor.
+     * @param Context $context
+     * @param Session $customerSession
+     * @param PageFactory $pageFactory
+     */
     public function __construct(
         Context $context,
         Session $customerSession,
@@ -21,6 +34,9 @@ class Index extends Action
         return parent::__construct($context);
     }
 
+    /**
+     * @return object
+     */
     public function execute() {
 
         $resultRedirect = $this->resultRedirectFactory->create();

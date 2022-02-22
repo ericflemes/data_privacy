@@ -1,6 +1,7 @@
 <?php
 namespace Elemes\DataPrivacy\Model;
 
+use Exception;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 use Elemes\DataPrivacy\Helper\Data;
@@ -22,9 +23,13 @@ class Privacy
      * @var \Elemes\DataPrivacy\Helper\Data
      */
     protected $_helper;
-
+    /**
+     * @var \Magento\Customer\Model\Customer
+     */
     protected $customer;
-
+    /**
+     * @var \Magento\Customer\Model\ResourceModel\CustomerFactory
+     */
     protected $customerFactory;
 
     /**
@@ -32,7 +37,14 @@ class Privacy
      */
     private $serializer;
 
-
+    /**
+     * @param  CustomerRepositoryInterface $customerRepositoryInterface
+     * @param Json $json
+     * @param Data $helper
+     * @param Customer $customer
+     * @param CustomerFactory $customerFactory
+     * @param  SerializerInterface $serializer
+     */
     public function __construct(
         CustomerRepositoryInterface $customerRepositoryInterface,
         Json $json,
@@ -58,16 +70,13 @@ class Privacy
         if (empty($customerId)) {
             return false;
         }
+
         $customer = $this->customerRepositoryInterface->getById($customerId);
         $customerAttributeData = $customer->__toArray();
+
         if (!empty($customerAttributeData['custom_attributes']['data_privacy']['value'])) {
             return $this->json->unserialize($customerAttributeData['custom_attributes']['data_privacy']['value']);
         }
-    }
-
-    public function setCustomerDataPrivacy($customerId, $data)
-    {
-         return $this->setDataPrivacy($data,$customerId);
     }
 
     /**
@@ -82,7 +91,14 @@ class Privacy
         return $this->json->unserialize($this->_helper->getModalRanges());
     }
 
+    /**
+     * @param  $customerId int
+     * @param  $data array
+     * @return bool
+     * @throws Exception
+     */
     public function setDataPrivacy($param, $customerId) {
+
         if(empty($param['customer_privacy'])) {
             return false;
         }
@@ -90,10 +106,10 @@ class Privacy
         try {
             $customer = $this->customer->load($customerId);
             $this->setPrivacy($customer, $param['customer_privacy']);
+
             if($customer->save()) {
                 return true;
             }
-
         } catch ( Exception $e) {
             return false;
         }

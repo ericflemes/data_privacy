@@ -25,8 +25,7 @@ class InstallData implements InstallDataInterface
         $this->eavConfig       = $eavConfig;
     }
 
-    public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
-    {
+    public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context) {
         $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
         $attributeCode = 'data_privacy';
         $eavSetup->addAttribute(

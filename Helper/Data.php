@@ -29,6 +29,8 @@ class Data extends AbstractHelper
     /**
      * Data constructor.
      * @param ScopeConfigInterface $scopeConfig
+     * @param StoreManagerInterface $storeManager
+     * @param SerializerInterface $serializer
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
@@ -68,13 +70,17 @@ class Data extends AbstractHelper
      * @return array
      */
     public function getValueStandard() {
+        $standard = null;
         $values = $this->getModalRangesDecode();
-        foreach ($values as $value => $key) {
+        foreach ($values as $key) {
             $standard[$key['label']] = $key['value'];
         }
         return $standard;
     }
 
+    /**
+     * @return string
+     */
     public function setChecked($field, $data) {
         $checked = '';
         if(array_key_exists($field,$data)) {
@@ -85,6 +91,9 @@ class Data extends AbstractHelper
         return $checked;
     }
 
+    /**
+     * @return array
+     */
     public function responseFormatBodyApi($success, $message) {
         return ['success' => $success, 'message' => $message];
     }

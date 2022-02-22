@@ -13,11 +13,28 @@ use Elemes\DataPrivacy\Model\Elemes\DataPrivacy\Model;
 class Save extends Action {
 
     const URL =  'privacy/customer/';
+
     protected $_request;
+    /**
+     * @var Session
+     */
     protected $_customerSession;
+    /**
+     * @var PageFactory
+     */
     protected $pageFactory;
+    /**
+     * @var Privacy
+     */
     protected $privacy;
 
+    /**
+     * Data constructor.
+     * @param Context $context
+     * @param PageFactory $pageFactory
+     * @param Session $customerSession
+     * @param Privacy $privacy
+     */
     public function __construct(
         Context $context,
         PageFactory $pageFactory,
@@ -31,6 +48,10 @@ class Save extends Action {
         return parent::__construct($context);
     }
 
+    /**
+     * @return bool
+     * @throws Exception
+     */
     public function execute() {
 
         $post = $this->_request->getParams();
