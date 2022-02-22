@@ -22,6 +22,9 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>A pop-up will appear on the home requesting that By using our website, you agree to the use of cookies.</comment>
                     <tooltip>When the customer does not fill in this information, the site will display a message.</tooltip>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
                 <field id="ranges" translate="label" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Options to customer</label>
@@ -29,11 +32,32 @@
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
                     <comment>Name field must not contain spaces or special characters</comment>
                     <tooltip>Values requested from your customer</tooltip>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
                 </field>
                 <field id="editor_textarea" translate="label comment" sortOrder="3" type="editor" showInStore="1" showInDefault="1" >
                     <label>Privacy Policy</label>
                     <frontend_model>Elemes\DataPrivacy\Block\Adminhtml\System\Config\Editor</frontend_model>
                     <comment>Your data privacy text.</comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="enable_integration" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable external integration</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>This option enabled sends the data to the external integration url</comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="integration_url" translate="label" type="text" sortOrder="101" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>URL external integration</label>
+                    <comment>This option enabled sends the data to the external integration url exemple: https://myapi.com/dataprivacy</comment>
+                    <depends>
+                        <field id="enable_integration">1</field>
+                    </depends>
                 </field>
             </group>
         </section>

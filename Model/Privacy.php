@@ -5,6 +5,7 @@ use Exception;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 use Elemes\DataPrivacy\Helper\Data;
+use Elemes\DataPrivacy\Helper\Integration;
 use \Magento\Customer\Model\Customer;
 use \Magento\Customer\Model\ResourceModel\CustomerFactory;
 use Magento\Framework\Serialize\SerializerInterface;
@@ -24,6 +25,10 @@ class Privacy
      */
     protected $_helper;
     /**
+     * @var Integration
+     */
+    protected $integration;
+    /**
      * @var \Magento\Customer\Model\Customer
      */
     protected $customer;
@@ -38,17 +43,19 @@ class Privacy
     private $serializer;
 
     /**
-     * @param  CustomerRepositoryInterface $customerRepositoryInterface
+     * @param CustomerRepositoryInterface $customerRepositoryInterface
      * @param Json $json
      * @param Data $helper
+     * @param Integration $integration
      * @param Customer $customer
      * @param CustomerFactory $customerFactory
-     * @param  SerializerInterface $serializer
+     * @param SerializerInterface $serializer
      */
     public function __construct(
         CustomerRepositoryInterface $customerRepositoryInterface,
         Json $json,
         Data $helper,
+        Integration $integration,
         Customer $customer,
         CustomerFactory $customerFactory,
         SerializerInterface $serializer
@@ -56,6 +63,7 @@ class Privacy
         $this->customerRepositoryInterface = $customerRepositoryInterface;
         $this->json = $json;
         $this->_helper = $helper;
+        $this->integration = $integration;
         $this->customer = $customer;
         $this->customerFactory = $customerFactory;
         $this->serializer = $serializer;
@@ -106,7 +114,7 @@ class Privacy
         try {
             $customer = $this->customer->load($customerId);
             $this->setPrivacy($customer, $param['customer_privacy']);
-
+            $this->integration->setIntegration($param['customer_privacy'],$customerId);
             if($customer->save()) {
                 return true;
             }

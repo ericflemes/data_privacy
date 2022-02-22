@@ -65,7 +65,7 @@ class Save extends Action {
             }
 
             $this->privacy->setDataPrivacy($post, $entity_id);
-            $this->messageManager->addSuccess(__('Thanks!'));
+            $this->messageManager->addSuccess(__('Thank you for updating your privacy data!'));
             $resultRedirect->setUrl($this->_redirect(self::URL));
 
         } catch (Exception $e) {

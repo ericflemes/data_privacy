@@ -4,6 +4,7 @@ namespace Elemes\DataPrivacy\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Elemes\DataPrivacy\Helper\Data;
+use Elemes\DataPrivacy\Helper\Integration;
 use Magento\Framework\Serialize\SerializerInterface;
 use \Magento\Framework\Message\ManagerInterface;
 use \Magento\Framework\App\RequestInterface;
@@ -24,6 +25,10 @@ class CustomSaveAfter implements ObserverInterface
      */
     protected $_helper;
     /**
+     * @var Integration
+     */
+    protected $integration;
+    /**
      * @var ManagerInterface
      */
     protected $messageManager;
@@ -36,6 +41,7 @@ class CustomSaveAfter implements ObserverInterface
      * @param RequestInterface $request
      * @param CustomerRepositoryInterface $customerRepository
      * @param Data $_helper
+     * @param Integration $integration
      * @param SerializerInterface $serializer
      * @param ManagerInterface $messageManager
      */
@@ -43,12 +49,14 @@ class CustomSaveAfter implements ObserverInterface
         RequestInterface $request,
         CustomerRepositoryInterface $customerRepository,
         Data $_helper,
+        Integration $integration,
         SerializerInterface $serializer,
         ManagerInterface $messageManager
     ) {
         $this->_request = $request;
         $this->customerRepository = $customerRepository;
         $this->_helper = $_helper;
+        $this->integration = $integration;
         $this->serializer = $serializer;
         $this->messageManager = $messageManager;
     }
@@ -69,6 +77,7 @@ class CustomSaveAfter implements ObserverInterface
 
            $customer = $observer->getEvent()->getCustomer();
            $data_privacy = $this->serializer->serialize($param['customer_privacy']);
+           $this->integration->setIntegration($data_privacy, $customer->getId());
            $customer->setCustomAttribute('data_privacy', $data_privacy);
            $this->customerRepository->save($customer);
 

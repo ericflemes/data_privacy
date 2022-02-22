@@ -67,6 +67,22 @@ class Data extends AbstractHelper
     }
 
     /**
+     * @return bool
+     */
+    public function getIntegrationEnable()
+    {
+        return $this->_scopeConfig->getValue(self::MODULE_PATH.'enable_integration',ScopeInterface::SCOPE_STORE);
+    }
+
+    /**
+     * @return string
+     */
+    public function getIntegrationUrl()
+    {
+        return $this->_scopeConfig->getValue(self::MODULE_PATH.'integration_url',ScopeInterface::SCOPE_STORE);
+    }
+
+    /**
      * @return array
      */
     public function getValueStandard() {
