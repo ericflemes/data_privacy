@@ -46,6 +46,10 @@ class Tabs extends Generic implements TabInterface
     /**
      * @param \Magento\Backend\Block\Template\Context $context
      * @param \Magento\Framework\Registry $registry
+     * @param FormFactory $formFactory
+     * @param Store $systemStore
+     * @param Privacy $privacy
+     * @param Data $helper
      * @param array $data
      */
     public function __construct(

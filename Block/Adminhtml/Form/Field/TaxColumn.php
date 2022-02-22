@@ -41,6 +41,9 @@ class TaxColumn extends Select
         return parent::_toHtml();
     }
 
+    /**
+     * @return \string[][]
+     */
     private function getSourceOptions(): array
     {
         return [
