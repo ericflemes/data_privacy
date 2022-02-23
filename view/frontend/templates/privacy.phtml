@@ -25,37 +25,41 @@ $data = $block->getPrivacy(); ?>
         </div>
         </br>
         <div class="field" id="edit_privacy">
-            <form class="form form-data-privacy" action="<?php /* @escapeNotVerified */ echo $block->getFormAction(); ?>" method="post" id="form-privacy" data-hasrequired="* Required Fields">
+            <form class="form form-data-privacy" action="<?php /* @escapeNotVerified */ echo $block->getFormAction(); ?>" method="post" id="form-privacy" data-hasrequired="* Required Fields" data-mage-init='{"validation":{}}'>
+                <div class="options-list">
                 <?php foreach ($block->getFields() as $key => $field): ?>
                     <div class="field required" id="edit_privacy_line_<?php echo $field['label']; ?>">
-                        <label for="data" class="label">
-                            <span>
-                                <b><?php echo ucfirst($field['name']); ?></b>
-                            </span>
-                        </label>
-                        <p>
-                            <?php /* @escapeNotVerified */
-                            echo __('I do not accept') ?>
-                            <input type="radio" name="customer_privacy[<?php echo $field['label']; ?>]"
-                                   id="no_<?php echo $field['label']; ?>"
-                                   data-qa="no_<?php echo $field['label']; ?>" value="0"
-                                   data-validate="{required:1}"
-                            <?php
-                            if(array_key_exists($field['label'],$data)) {
-                                if(!$data[$field['label']]) {
-                                    echo 'checked';
+                        <div class="field choice">
+                            <label for="data" class="label">
+                                <span>
+                                    <b><?php echo ucfirst($field['name']); ?></b>
+                                </span>
+                            </label>
+                                <p>
+                                <?php /* @escapeNotVerified */
+                                echo __('I do not accept') ?>
+                                <input type="radio" name="customer_privacy[<?php echo $field['label']; ?>]"
+                                       id="no_<?php echo $field['label']; ?>"
+                                       data-qa="no_<?php echo $field['label']; ?>" value="0"
+                                       data-validate="{'validate-one-required-by-name':true}"
+                                <?php
+                                if(array_key_exists($field['label'],$data)) {
+                                    if(!$data[$field['label']]) {
+                                        echo 'checked';
+                                    }
                                 }
-                            }
-                            ?>>
-                            <?php /* @escapeNotVerified */
-                            echo __('Accepted') ?>
-                            <input type="radio" name="customer_privacy[<?php echo $field['label']; ?>]"
-                                   id="<?php echo $field['label']; ?>"
-                                   data-qa="<?php echo $field['label']; ?>" value="1" data-validate="{required:1}"
-                                <?php echo $block->getChecked($field['label'], $data); ?>>
-                        </p>
+                                ?>>
+                                <?php /* @escapeNotVerified */
+                                echo __('Accepted') ?>
+                                <input type="radio" name="customer_privacy[<?php echo $field['label']; ?>]"
+                                       id="<?php echo $field['label']; ?>"
+                                       data-qa="<?php echo $field['label']; ?>" value="1" data-validate="{'validate-one-required-by-name':true}""
+                                    <?php echo $block->getChecked($field['label'], $data); ?>>
+                            </p>
+                        </div>
                     </div>
                 <?php endforeach; ?>
+                </div>
                 <button type="submit" title="Save" class="action save primary"><span><?php /* @escapeNotVerified */ echo __('Save'); ?></span></button>
             </form>
         </div>
