@@ -14,12 +14,12 @@ class Data extends AbstractHelper
     /**
      * @var ScopeConfigInterface
      */
-    protected $_scopeConfig;
+    protected $scopeConfig;
 
     /**
      * @var StoreManagerInterface
      */
-    protected $_storeManager;
+    protected $storeManager;
 
     /**
      * @var SerializerInterface
@@ -37,8 +37,8 @@ class Data extends AbstractHelper
         StoreManagerInterface $storeManager,
         SerializerInterface $serializer
     ) {
-        $this->_scopeConfig = $scopeConfig;
-        $this->_storeManager = $storeManager;
+        $this->scopeConfig = $scopeConfig;
+        $this->storeManager = $storeManager;
         $this->serializer = $serializer;
     }
 
@@ -47,7 +47,7 @@ class Data extends AbstractHelper
      */
     public function getIsModuleEnable()
     {
-        return $this->_scopeConfig->getValue(self::MODULE_PATH.'enable',ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue(self::MODULE_PATH.'enable',ScopeInterface::SCOPE_STORE);
     }
 
     /**
@@ -55,7 +55,7 @@ class Data extends AbstractHelper
      */
     public function getModalRanges()
     {
-        return $this->_scopeConfig->getValue(self::MODULE_PATH.'ranges',ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue(self::MODULE_PATH.'ranges',ScopeInterface::SCOPE_STORE);
     }
 
     /**
@@ -63,7 +63,7 @@ class Data extends AbstractHelper
      */
     public function getModalRangesDecode()
     {
-        return $this->serializer->unserialize($this->_scopeConfig->getValue(self::MODULE_PATH.'ranges',ScopeInterface::SCOPE_STORE));
+        return $this->serializer->unserialize($this->scopeConfig->getValue(self::MODULE_PATH.'ranges',ScopeInterface::SCOPE_STORE));
     }
 
     /**
@@ -71,7 +71,7 @@ class Data extends AbstractHelper
      */
     public function getIntegrationEnable()
     {
-        return $this->_scopeConfig->getValue(self::MODULE_PATH.'enable_integration',ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue(self::MODULE_PATH.'enable_integration',ScopeInterface::SCOPE_STORE);
     }
 
     /**
@@ -79,7 +79,7 @@ class Data extends AbstractHelper
      */
     public function getIntegrationUrl()
     {
-        return $this->_scopeConfig->getValue(self::MODULE_PATH.'integration_url',ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue(self::MODULE_PATH.'integration_url',ScopeInterface::SCOPE_STORE);
     }
 
     /**

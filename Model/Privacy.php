@@ -23,7 +23,7 @@ class Privacy
     /**
      * @var \Elemes\DataPrivacy\Helper\Data
      */
-    protected $_helper;
+    protected $helper;
     /**
      * @var Integration
      */
@@ -62,7 +62,7 @@ class Privacy
     ) {
         $this->customerRepositoryInterface = $customerRepositoryInterface;
         $this->json = $json;
-        $this->_helper = $helper;
+        $this->helper = $helper;
         $this->integration = $integration;
         $this->customer = $customer;
         $this->customerFactory = $customerFactory;
@@ -94,9 +94,9 @@ class Privacy
     public function getRanges($serialize = true)
     {
         if ($serialize) {
-            return $this->json->serialize($this->_helper->getModalRanges());
+            return $this->json->serialize($this->helper->getModalRanges());
         }
-        return $this->json->unserialize($this->_helper->getModalRanges());
+        return $this->json->unserialize($this->helper->getModalRanges());
     }
 
     /**

@@ -19,17 +19,17 @@ class Tabs extends Generic implements TabInterface
     /**
      * @var \Magento\Store\Model\System\Store
      */
-    protected $_systemStore;
+    protected $systemStore;
     /**
      * Core registry
      *
      * @var \Magento\Framework\Registry
      */
-    protected $_coreRegistry;
+    protected $coreRegistry;
     /**
      * @var \Elemes\DataPrivacy\Helper\Data
      */
-    protected $_helper;
+    protected $helper;
     /**
      * @var \Magento\Framework\Data\FormFactory
      */
@@ -37,7 +37,7 @@ class Tabs extends Generic implements TabInterface
     /**
      * @var \Elemes\DataPrivacy\Model\Privacy
      */
-    protected $_privacy;
+    protected $privacy;
 
     const label = 'label';
     const name = 'name';
@@ -61,10 +61,10 @@ class Tabs extends Generic implements TabInterface
         Data $helper,
         array $data = []
     ) {
-        $this->_coreRegistry = $registry;
-        $this->_systemStore = $systemStore;
-        $this->_helper = $helper;
-        $this->_privacy = $privacy;
+        $this->coreRegistry = $registry;
+        $this->systemStore = $systemStore;
+        $this->helper = $helper;
+        $this->privacy = $privacy;
         parent::__construct($context, $registry, $formFactory, $data);
     }
 
@@ -73,7 +73,7 @@ class Tabs extends Generic implements TabInterface
      */
     public function getCustomerId()
     {
-        return $this->_coreRegistry->registry(RegistryConstants::CURRENT_CUSTOMER_ID);
+        return $this->coreRegistry->registry(RegistryConstants::CURRENT_CUSTOMER_ID);
     }
 
     /**
@@ -144,10 +144,10 @@ class Tabs extends Generic implements TabInterface
         $form->setHtmlIdPrefix('user_');
         $fieldset = $form->addFieldset('base_fieldset', ['legend' => __('Data Privacy')]);
 
-        if ($this->_helper->getIsModuleEnable()) {
+        if ($this->helper->getIsModuleEnable()) {
 
-            $valueCustomer = $this->_privacy->getCustomerDataPrivacy($this->getCustomerId());
-            $valuesForm = $this->_privacy->getRanges(false);
+            $valueCustomer = $this->privacy->getCustomerDataPrivacy($this->getCustomerId());
+            $valuesForm = $this->privacy->getRanges(false);
 
             if(!empty($valueCustomer)) {
                 $formCustomer = $this->getFormCustomer($valueCustomer, $valuesForm);
@@ -193,7 +193,7 @@ class Tabs extends Generic implements TabInterface
      */
     public function canShowTab()
     {
-        if ($this->getCustomerId() && ($this->_helper->getIsModuleEnable())) {
+        if ($this->getCustomerId() && ($this->helper->getIsModuleEnable())) {
             return true;
         }
         return false;

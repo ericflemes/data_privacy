@@ -14,11 +14,10 @@ class Save extends Action {
 
     const URL =  'privacy/customer/';
 
-    protected $_request;
     /**
      * @var Session
      */
-    protected $_customerSession;
+    protected $customerSession;
     /**
      * @var PageFactory
      */
@@ -43,7 +42,7 @@ class Save extends Action {
     ) {
 
         $this->pageFactory = $pageFactory;
-        $this->_customerSession = $customerSession;
+        $this->customerSession = $customerSession;
         $this->privacy =  $privacy;
         return parent::__construct($context);
     }
@@ -55,7 +54,7 @@ class Save extends Action {
     public function execute() {
 
         $post = $this->_request->getParams();
-        $entity_id = $this->_customerSession->getCustomer()->getId();
+        $entity_id = $this->customerSession->getCustomer()->getId();
         $resultRedirect = $this->resultRedirectFactory->create();
 
         try {

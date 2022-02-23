@@ -15,7 +15,7 @@ class CustomSaveAfter implements ObserverInterface
     /**
      * @var RequestInterface
      */
-    protected $_request;
+    protected $request;
     /**
      * @var CustomerRepositoryInterface
      */
@@ -23,7 +23,7 @@ class CustomSaveAfter implements ObserverInterface
     /**
      * @var Data
      */
-    protected $_helper;
+    protected $helper;
     /**
      * @var Integration
      */
@@ -40,7 +40,7 @@ class CustomSaveAfter implements ObserverInterface
     /**
      * @param RequestInterface $request
      * @param CustomerRepositoryInterface $customerRepository
-     * @param Data $_helper
+     * @param Data $helper
      * @param Integration $integration
      * @param SerializerInterface $serializer
      * @param ManagerInterface $messageManager
@@ -48,14 +48,14 @@ class CustomSaveAfter implements ObserverInterface
     public function __construct(
         RequestInterface $request,
         CustomerRepositoryInterface $customerRepository,
-        Data $_helper,
+        Data $helper,
         Integration $integration,
         SerializerInterface $serializer,
         ManagerInterface $messageManager
     ) {
-        $this->_request = $request;
+        $this->request = $request;
         $this->customerRepository = $customerRepository;
-        $this->_helper = $_helper;
+        $this->helper = $helper;
         $this->integration = $integration;
         $this->serializer = $serializer;
         $this->messageManager = $messageManager;
@@ -68,7 +68,7 @@ class CustomSaveAfter implements ObserverInterface
      */
     public function execute(Observer $observer) {
         try {
-           $param = $this->_request->getParams();
+           $param = $this->request->getParams();
            $param = $this->setValueStandard($param);
 
            if(empty($param['customer_privacy'])) {
@@ -93,7 +93,7 @@ class CustomSaveAfter implements ObserverInterface
     public function setValueStandard($param) {
 
         if(!empty($param['dataPrivacy'])) {
-            $param['customer_privacy'] = $this->_helper->getValueStandard();
+            $param['customer_privacy'] = $this->helper->getValueStandard();
         }
         return $param;
     }

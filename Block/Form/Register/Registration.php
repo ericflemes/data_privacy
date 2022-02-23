@@ -10,7 +10,7 @@ class Registration extends Template
     /**
      * @var Data
      */
-    protected $_helper;
+    protected $helper;
 
     /**
      * @var  Context
@@ -20,13 +20,13 @@ class Registration extends Template
     /**
      * Data constructor.
      * @param Context $context
-     * @param Data $_helper
+     * @param Data $helper
      */
     public function __construct(
         Context $context,
-        Data $_helper
+        Data $helper
     ) {
-        $this->_helper = $_helper;
+        $this->helper = $helper;
         parent::__construct($context);
     }
 
@@ -34,13 +34,13 @@ class Registration extends Template
      * @return bool
      */
     public function getModuleStatus() {
-        return $this->_helper->getIsModuleEnable();
+        return $this->helper->getIsModuleEnable();
     }
 
     /**
      * @return array
      */
     public function getFields() {
-        return $this->_helper->getModalRangesDecode();
+        return $this->helper->getModalRangesDecode();
     }
 }

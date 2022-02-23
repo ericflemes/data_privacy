@@ -13,22 +13,22 @@ class Integration extends AbstractHelper
     /**
      * @var Data
      */
-    protected $_helper;
+    protected $helper;
 
     /**
-     * @param Data $_helper
+     * @param Data $helper
      * @param Curl $curl
      */
     public function __construct(
-        Data $_helper,
+        Data $helper,
         Curl $curl
     ) {
-        $this->_helper = $_helper;
+        $this->helper = $helper;
         $this->curl = $curl;
     }
     public function setIntegration($param,$customerId) {
 
-        if($this->_helper->getIntegrationEnable() != false) {
+        if($this->helper->getIntegrationEnable() != false) {
             try {
                 $this->curl->setOption(CURLOPT_HEADER, 0);
                 $this->curl->setOption(CURLOPT_TIMEOUT, 60);
@@ -48,8 +48,8 @@ class Integration extends AbstractHelper
      * @throws Exception
      */
     public function setURL() {
-        if (!empty($this->_helper->getIntegrationUrl())) {
-            return $this->_helper->getIntegrationUrl();
+        if (!empty($this->helper->getIntegrationUrl())) {
+            return $this->helper->getIntegrationUrl();
         } else {
             throw new Exception('Url not informed');
         }

@@ -9,11 +9,10 @@ use Magento\Customer\Model\Session;
 
 class Index extends Template
 {
-
     /**
      * @var Data
      */
-    protected $_helper;
+    protected $helper;
     /**
      * @var Privacy
      */
@@ -30,17 +29,17 @@ class Index extends Template
     /**
      * Data constructor.
      * @param Context $context
-     * @param Data $_helper
+     * @param Data $helper
      * @param Session $customerSession
      * @param Privacy $privacy
      */
     public function __construct (
         Context $context,
-        Data $_helper,
+        Data $helper,
         Session $customerSession,
         Privacy $privacy
     ) {
-        $this->_helper = $_helper;
+        $this->helper = $helper;
         $this->customerSession = $customerSession;
         $this->privacy = $privacy;
         parent::__construct($context);
@@ -50,14 +49,14 @@ class Index extends Template
      * @return mixed
      */
     public function getModuleStatus() {
-        return $this->_helper->getIsModuleEnable();
+        return $this->helper->getIsModuleEnable();
     }
 
     /**
      * @return array
      */
     public function getFields() {
-        return $this->_helper->getModalRangesDecode();
+        return $this->helper->getModalRangesDecode();
     }
 
     /**
@@ -73,7 +72,7 @@ class Index extends Template
      * @return string
      */
     public function getChecked($field, $data) {
-        return  $this->_helper->setChecked($field, $data);
+        return  $this->helper->setChecked($field, $data);
     }
 
     /**
