@@ -16,25 +16,32 @@
     </div>
     </br>
     <div class="field" id="edit_privacy" style="display: none;">
-        <?php foreach ($block->getFields() as $key => $field): ?>
-            <div class="field required" id="edit_privacy_line_<?php echo $field['label']; ?>">
-                <label for="data" class="label">
-                <span>
-                    <b><?php echo ucfirst($field['name']); ?></b>
-                </span>
-                </label>
-                <p>
-                    <?php /* @escapeNotVerified */
-                    echo __('I do not accept') ?>
-                    <input type="radio" name="customer_privacy[<?php echo $field['label'];?>]" id="no_<?php echo $field['label']; ?>"
-                           data-qa="no_<?php echo $field['label']; ?>" value="0" data-validate="{required:true}">
-                    <?php /* @escapeNotVerified */
-                    echo __('Accepted') ?>
-                    <input type="radio" name="customer_privacy[<?php echo $field['label'];?>]" id="<?php echo $field['label']; ?>"
-                               data-qa="<?php echo $field['label']; ?>" value="1" data-validate="{required:true}">
-                </p>
-            </div>
-        <?php endforeach; ?>
+        <div class="options-list">
+            <?php foreach ($block->getFields() as $key => $field): ?>
+                <div class="field required" id="edit_privacy_line_<?php echo $field['label']; ?>">
+                    <div class="field choice">
+                        <label for="data" class="label">
+                            <span>
+                                <b><?php echo ucfirst($field['name']); ?></b>
+                            </span>
+                        </label>
+                         </br>
+                        <?php /* @escapeNotVerified */
+                        echo __('I do not accept') ?>
+                        <input type="radio" name="customer_privacy[<?php echo $field['label']; ?>]"
+                               id="no_<?php echo $field['label']; ?>"
+                               data-qa="no_<?php echo $field['label']; ?>" value="0"
+                               data-validate="{'validate-one-required-by-name':true}">
+                        <?php /* @escapeNotVerified */
+                        echo __('Accepted') ?>
+                        <input type="radio" name="customer_privacy[<?php echo $field['label']; ?>]"
+                               id="<?php echo $field['label']; ?>"
+                               data-qa="<?php echo $field['label']; ?>" value="1"
+                               data-validate="{'validate-one-required-by-name':true}">
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
     <div class="field required" id="privacy">
         <input type="radio" name="dataPrivacy" id="dataPrivacy" value="true" data-validate="{required:true}">
@@ -44,13 +51,12 @@
         </span>
         </label>
     </div>
-
     <hr/>
     <div class="field">
         <?php /* @escapeNotVerified */
         echo __('You can change your choices at any time under'); ?>
         <b><?php /* @escapeNotVerified */
-            echo __('Data Privacy');?></b>
+            echo __('Data Privacy'); ?></b>
         <?php /* @escapeNotVerified */
         echo __('in your account settings.'); ?>
     </div>
