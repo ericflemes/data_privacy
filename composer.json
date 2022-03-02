@@ -1,7 +1,7 @@
 {
     "name": "elemes/data-privacy",
     "license": "GPL-3.0-only",
-    "version": "1.0.0",
+    "version": "0.2.1",
     "type": "magento2-module",
     "description": "Magento 2 Data Privacy",
     "require": {
@@ -25,9 +25,12 @@
             "Elemes\\DataPrivacy\\": ""
         }
     },
+    "config": {
+        "secure-http": false
+    },
     "repositories": [
         {
-            "type": "vcs",
+            "type": "git",
             "url": "https://github.com/ericflemes/data_privacy.git"
         }
     ]
