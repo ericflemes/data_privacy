@@ -1,6 +1,6 @@
 {
-    "name": "elemes/data-privacyr",
-    "description": "N/A",
+    "name": "elemes/data-privacy",
+    "description": "Module customer data privacy",
     "config": {
         "sort-packages": true
     },
