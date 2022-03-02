@@ -1,0 +1,31 @@
+{
+    "name": "elemes/data-privacy",
+    "license": "GPL-3.0-only",
+    "version": "0.2.1",
+    "type": "magento2-module",
+    "description": "Magento 2 Data Privacy",
+    "require": {
+        "php": "~7.0.0|~7.3.33"
+    },
+    "authors": [
+        {
+            "name": "Eric Lemes",
+            "email": "ericflemes@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "scripts": {
+        "test": "phpunit"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Os\\Customer\\": ""
+        }
+    },
+    "config": {
+        "secure-http": false
+    }
+}
