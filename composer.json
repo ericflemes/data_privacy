@@ -25,9 +25,6 @@
             "Elemes\\DataPrivacy\\": ""
         }
     },
-    "config": {
-        "secure-http": false
-    },
     "repositories": [
         {
             "type": "vcs",
