@@ -7,5 +7,3 @@ Also available services via API
 
 This module is under development.
 Will be available for installation soon
-
-End forecast february 2022

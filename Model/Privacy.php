@@ -136,4 +136,24 @@ class Privacy
         $customer->updateData($customerData);
     }
 
+    /**
+     * @param array $param
+     * @param \Magento\Customer\Api\Data\CustomerInterface $customer
+     * @return \Magento\Customer\Api\Data\CustomerInterface
+     * @throws \Magento\Framework\Exception\InputException
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws \Magento\Framework\Exception\State\InputMismatchException
+     */
+    public function setCustomerDataPrivacy(array $param, $customer) {
+        $data_privacy = $this->serializer->serialize($param['customer_privacy']);
+        if (!empty($param['customer_id'])) {
+            $customer = $this->customerRepositoryInterface->getById($param['customer_id']);
+        }
+        $customer->setCustomAttribute('data_privacy', $data_privacy);
+        $this->customerRepositoryInterface->save($customer);
+        $this->integration->setIntegration($param['customer_privacy'],$param['customer_id']);
+        return $customer;
+    }
+
 }

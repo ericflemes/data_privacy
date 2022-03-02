@@ -29,15 +29,17 @@ class Integration extends AbstractHelper
     public function setIntegration($param,$customerId) {
 
         if($this->helper->getIntegrationEnable() != false) {
-            try {
-                $this->curl->setOption(CURLOPT_HEADER, 0);
-                $this->curl->setOption(CURLOPT_TIMEOUT, 60);
-                $this->curl->addHeader("Content-Type", "application/json");
-                $data = $this->formatBody($param, $customerId);
-                $this->curl->post($this->setURL(),$data);
-                return $this->curl->getBody();
-            } catch (Exception $e) {
-                return  false;
+            if (!empty($customerId)) {
+                try {
+                    $this->curl->setOption(CURLOPT_HEADER, 0);
+                    $this->curl->setOption(CURLOPT_TIMEOUT, 60);
+                    $this->curl->addHeader("Content-Type", "application/json");
+                    $data = $this->formatBody($param, $customerId);
+                    $this->curl->post($this->setURL(), $data);
+                    return $this->curl->getBody();
+                } catch (Exception $e) {
+                    return false;
+                }
             }
         }
         return  false;
