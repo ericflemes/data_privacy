@@ -27,11 +27,5 @@
     },
     "config": {
         "secure-http": false
-    },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/ericflemes/data_privacy.git"
-        }
-    ]
+    }
 }
