@@ -55,11 +55,11 @@ class Custom
     /**
      * @return mixed
      */
-    public function setData()
-    {
+    public function setData() {
         $params = $this->request->getBodyParams();
 
         try {
+            $this->helper->validateDataPrivacy($params['data']['customer_privacy']);
             $save = $this->privacy->setDataPrivacy($params['data'], $params['customerId']);
             if($save == true) {
                 $response = $this->helper->responseFormatBodyApi(true,__('Saved'));
@@ -77,8 +77,7 @@ class Custom
      * @param $value int
      * @return mixed
      */
-    public function getData($value)
-    {
+    public function getData($value) {
         try {
             $value = $this->privacy->getCustomerDataPrivacy($value);
             $response = $this->helper->responseFormatBodyApi(true, $value);
@@ -92,8 +91,7 @@ class Custom
     /**
      * @return mixed
      */
-    public function getConfigPrivacy()
-    {
+    public function getConfigPrivacy() {
         try {
             $value = $this->privacy->getRanges(false);
             $response = $this->helper->responseFormatBodyApi(true, $value);

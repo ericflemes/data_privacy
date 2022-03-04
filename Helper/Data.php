@@ -63,7 +63,7 @@ class Data extends AbstractHelper
      */
     public function getModalRangesDecode()
     {
-        return $this->serializer->unserialize($this->scopeConfig->getValue(self::MODULE_PATH.'ranges',ScopeInterface::SCOPE_STORE));
+        return $this->serializer->unserialize($this->getModalRanges());
     }
 
     /**
@@ -112,5 +112,41 @@ class Data extends AbstractHelper
      */
     public function responseFormatBodyApi($success, $message) {
         return ['success' => $success, 'message' => $message];
+    }
+
+    public function validateDataPrivacy($data) {
+        if($this->getIsModuleEnable()) {
+            $err = $this->getErr($data);
+            if(count( $err['errors']) >= 1) {
+                throw new \Exception( $this->serializer->serialize($err['errors']).'Invalid value');
+            }
+            if(count($err['value_error'])) {
+                throw new \Exception( 'values error set 1 or 0'. $this->serializer->serialize($err['value_error']));
+            }
+            if(count($data) < $err['total_column']) {
+                throw new \Exception( 'required values'. $this->serializer->serialize($err['default']));
+            }
+        } else {
+            throw new \Exception('Module Data Privacy disable.');
+        }
+    }
+
+    /**
+     * @param $data
+     * @return array
+     */
+    public function getErr($data) {
+        $column = array_column($this->getModalRangesDecode(), 'label');
+        $err = [];
+        $err2 = [];
+        foreach ($data as $label => $value1) {
+            if(($value1 > 1) || ($value1 < 0)) {
+                $err2[] = $label;
+            }
+            if ((in_array("$label", $column) === false)) {
+                $err[] = $label;
+            }
+        }
+        return array('errors'=>$err,'total_column'=> count($column),'default'=> $column, 'value_error'=> $err2);
     }
 }
