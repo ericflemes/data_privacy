@@ -59,6 +59,13 @@ class Data extends AbstractHelper
     }
 
     /**
+     * @return mixed
+     */
+    public function getEnableCookies() {
+        return $this->scopeConfig->getValue(self::MODULE_PATH.'enable_cookies',ScopeInterface::SCOPE_STORE);
+    }
+
+    /**
      * @return array
      */
     public function getModalRangesDecode()

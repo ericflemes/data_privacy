@@ -56,6 +56,7 @@
                     <label>URL external integration</label>
                     <comment>This option enabled sends the data to the external integration url exemple: https://myapi.com/dataprivacy</comment>
                     <depends>
+                        <field id="enable">1</field>
                         <field id="enable_integration">1</field>
                     </depends>
                 </field>
