@@ -1,27 +1,33 @@
 <?php /** @var Elemes\DataPrivacy\Block\Modal\Modal $block */ ?>
-<?php if($block->getModuleStatus() AND ($block->getEnableCookies())) : ?>
-<div id="modal-overlay" style="display:none;">
-    <div class="overlay-content">
-        <div class="title">
-            <h2><?php echo __('Data Privacy');?></h2>
-        </div>
-        <p><?php echo __('We use cookies and other similar technologies to improve your experience on our services, personalize advertising and recommend content of interest to you. By using our services, you consent to such monitoring. We also inform you that we have updated our Privacy Policy. Discover our Privacy Portal and see our new Policy.'); ?></p>
-        <form method="post" action="#" id="modal-overlay-form-validate" autocomplete="off" data-mage-init='{"validation":{}}'
-              data-hasrequired="<?= /* @escapeNotVerified */
-              __('* Required Fields') ?>">
-            <div class="modal-overlay-form">
-                <fieldset class="fieldset div-button">
-                    <div class="primary">
-                        <button class="action primary btn-place-order custom-final-checkout-btn" id="submit-button-modal-overlay">
-                            <span><?= __('proceed') ?></span>
-                        </button>
-                    </div>
-                </fieldset>
+<?php if ($block->getModuleStatus() and ($block->getEnableCookies())) : ?>
+    <div id="modal-overlay" style="display:none;">
+        <div class="overlay-content">
+            <div class="title">
+                <h2><?php echo __('Data Privacy'); ?></h2>
             </div>
-        </form>
+            <p>
+                <?php echo __('We use cookies and other similar technologies to improve your experience on our services, personalize advertising and recommend content of interest to you. By using our services, you consent to such monitoring. We also inform you that we have updated our'); ?>
+                <a href="privacy/policy">Privacy Policy</a>.
+                <?php echo __('Discover our Privacy Portal and see our new Policy.'); ?>
+            </p>
+            <form method="post" action="#" id="modal-overlay-form-validate" autocomplete="off"
+                  data-mage-init='{"validation":{}}'
+                  data-hasrequired="<?= /* @escapeNotVerified */
+                  __('* Required Fields') ?>">
+                <div class="modal-overlay-form">
+                    <fieldset class="fieldset div-button">
+                        <div class="primary">
+                            <button class="action primary btn-place-order custom-final-checkout-btn"
+                                    id="submit-button-modal-overlay">
+                                <span><?= __('proceed') ?></span>
+                            </button>
+                        </div>
+                    </fieldset>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-<script type="text/x-magento-init">
+    <script type="text/x-magento-init">
     {
         "*": {
             "Magento_Ui/js/core/app": {
@@ -33,20 +39,21 @@
             }
         }
     }
-</script>
-<script type="text/javascript">
-    require(
-        [
-            'jquery',
-            'mage/validation'
 
-        ], function(jQuery){
-            jQuery(document).ready(function () {
-                jQuery("#modal-overlay-form-validate").on('submit',function (e) {
-                    localStorage.setItem('dataprivacy', true);
+    </script>
+    <script type="text/javascript">
+        require(
+            [
+                'jquery',
+                'mage/validation'
+
+            ], function (jQuery) {
+                jQuery(document).ready(function () {
+                    jQuery("#modal-overlay-form-validate").on('submit', function (e) {
+                        localStorage.setItem('dataprivacy', true);
+                    });
                 });
-            });
-        }
-    );
-</script>
-<?php endif;?>
+            }
+        );
+    </script>
+<?php endif; ?>

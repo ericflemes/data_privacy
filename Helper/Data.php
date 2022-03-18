@@ -53,6 +53,14 @@ class Data extends AbstractHelper
     /**
      * @return mixed
      */
+    public function getTextPolicy()
+    {
+        return $this->scopeConfig->getValue(self::MODULE_PATH.'policy',ScopeInterface::SCOPE_STORE);
+    }
+
+    /**
+     * @return mixed
+     */
     public function getModalRanges()
     {
         return $this->scopeConfig->getValue(self::MODULE_PATH.'ranges',ScopeInterface::SCOPE_STORE);
