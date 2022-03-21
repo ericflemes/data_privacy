@@ -152,7 +152,7 @@ class Privacy
         }
         $customer->setCustomAttribute('data_privacy', $data_privacy);
         $this->customerRepositoryInterface->save($customer);
-        $this->integration->setIntegration($param['customer_privacy'],$param['customer_id']);
+        $this->integration->setIntegration($customer->getCustomAttribute('data_privacy')->getValue(), $customer->getId());
         return $customer;
     }
 

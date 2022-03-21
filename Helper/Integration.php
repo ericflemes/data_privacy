@@ -26,7 +26,7 @@ class Integration extends AbstractHelper
         $this->helper = $helper;
         $this->curl = $curl;
     }
-    public function setIntegration($param,$customerId) {
+    public function setIntegration($param, $customerId) {
 
         if($this->helper->getIntegrationEnable() != false) {
             if (!empty($customerId)) {
