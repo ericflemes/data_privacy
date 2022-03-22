@@ -1,19 +1,22 @@
 {
     "name": "elemes/data-privacy",
-    "license": "GPL-3.0-only",
-    "version": "1.0.9",
+    "description": "Data privacy",
     "type": "magento2-module",
-    "description": "Módulo Data Privacy",
-    "require": {
-        "php": "~7.0.0|~7.1.0|~7.2.0|~7.3.0|~7.4.0"
-    },
-    "authors":[
+    "version": "1.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "authors": [
         {
-            "name":"Eric Fagner Lemes",
-            "email":"ericflemes@gmail.com"
+            "email": "ericflemes@gmail.com",
+            "name": "Eric Lemes"
         }
     ],
     "minimum-stability": "dev",
+    "require": {
+        "php": "~5.5.0|~5.6.0|~7.0.0|7.1.*|7.2.*|7.3.*|7.4.*"
+    },
     "autoload": {
         "files": [
             "registration.php"
@@ -21,8 +24,5 @@
         "psr-4": {
             "Elemes\\DataPrivacy\\": ""
         }
-    },
-    "config":{
-        "secure-http":false
     }
 }
