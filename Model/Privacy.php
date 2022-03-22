@@ -73,8 +73,7 @@ class Privacy
      * @param  $customerId int
      * @return mixed
      */
-    public function getCustomerDataPrivacy($customerId = null)
-    {
+    public function getCustomerDataPrivacy($customerId = null) {
         if (empty($customerId)) {
             return false;
         }
@@ -91,8 +90,7 @@ class Privacy
      * @param bool $serialize bool
      * @return mixed
      */
-    public function getRanges($serialize = true)
-    {
+    public function getRanges($serialize = true) {
         if ($serialize) {
             return $this->json->serialize($this->helper->getModalRanges());
         }
@@ -105,55 +103,52 @@ class Privacy
      * @return bool
      * @throws Exception
      */
-    public function setDataPrivacy($param, $customerId) {
+    public function setDataPrivacy($param, $customer) {
 
         if(empty($param['customer_privacy'])) {
             return false;
         }
 
         try {
-            $customer = $this->customer->load($customerId);
-            $this->setPrivacy($customer, $param['customer_privacy']);
+            $customerId = $this->getCustomerId($param, $customer);
+            $customerData = $this->customer->load($customerId);
+            $this->setPrivacy($customerData, $param['customer_privacy']);
             $this->integration->setIntegration($param['customer_privacy'],$customerId);
-            if($customer->save()) {
-                return true;
-            }
+            return $customer;
         } catch ( Exception $e) {
             return false;
         }
-
     }
 
     /**
      * @param Customer $customer
      * @param $customer_privacy
-     * @return void
+     * @return Customer $customer
+     * @throws Exception
      */
     public function setPrivacy(Customer $customer, $customer_privacy) {
         $customerData = $customer->getDataModel();
         $data_privacy = $this->serializer->serialize($customer_privacy);
         $customerData->setCustomAttribute('data_privacy', $data_privacy);
         $customer->updateData($customerData);
-    }
-
-    /**
-     * @param array $param
-     * @param \Magento\Customer\Api\Data\CustomerInterface $customer
-     * @return \Magento\Customer\Api\Data\CustomerInterface
-     * @throws \Magento\Framework\Exception\InputException
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     * @throws \Magento\Framework\Exception\State\InputMismatchException
-     */
-    public function setCustomerDataPrivacy(array $param, $customer) {
-        $data_privacy = $this->serializer->serialize($param['customer_privacy']);
-        if (!empty($param['customer_id'])) {
-            $customer = $this->customerRepositoryInterface->getById($param['customer_id']);
-        }
-        $customer->setCustomAttribute('data_privacy', $data_privacy);
-        $this->customerRepositoryInterface->save($customer);
-        $this->integration->setIntegration($customer->getCustomAttribute('data_privacy')->getValue(), $customer->getId());
+        $customer->save();
         return $customer;
     }
 
+    /**
+     * @param $customer
+     * @return mixed|string
+     */
+    public function getCustomerId($param = null, $customer) {
+        if (is_object($customer)) {
+            if(empty($param['customer_id'])) {
+                $customerId = $customer->getId();
+            } else {
+                $customerId = $param['customer_id'];
+            }
+        } else {
+            $customerId = $customer;
+        }
+        return $customerId;
+    }
 }

@@ -42,7 +42,6 @@ class SavePrivacy
         RequestInterface $request,
         CustomerRepositoryInterface $customerRepository,
         Privacy $privacy
-
     ) {
         $this->helper = $helper;
         $this->request = $request;
@@ -56,14 +55,12 @@ class SavePrivacy
      * @return object
      */
     public function afterCreateAccount($interceptor, \Magento\Customer\Model\Data\Customer $customer) {
-        $param = $this->request->getParams();
-        $param = $this->setValueStandard($param);
-
+        $param = $this->getParam();
         if(empty($param['customer_privacy'])) {
             return false;
         }
 
-        return $this->privacy->setCustomerDataPrivacy($param, $customer);
+        return $this->privacy->setDataPrivacy($param, $customer);
     }
 
     /**
@@ -72,15 +69,11 @@ class SavePrivacy
      * @return object
      */
     public function afterexecute(\Magento\Customer\Controller\Adminhtml\Index\Save $customer, $result) {
-        $param = $this->request->getParams();
-        $param = $this->setValueStandard($param);
-
+        $param = $this->getParam();
         if(empty($param['customer_privacy'])) {
             return false;
         }
-
-        $this->privacy->setCustomerDataPrivacy($param, $customer);
-
+        $this->privacy->setDataPrivacy($param, $customer);
         return $result;
     }
 
@@ -93,6 +86,15 @@ class SavePrivacy
         if(!empty($param['dataPrivacy'])) {
             $param['customer_privacy'] = $this->helper->getValueStandard();
         }
+        return $param;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParam() {
+        $param = $this->request->getParams();
+        $param = $this->setValueStandard($param);
         return $param;
     }
 }
