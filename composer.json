@@ -13,7 +13,7 @@
             "email":"ericflemes@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "dev-main",
     "autoload": {
         "files": [
             "registration.php"
