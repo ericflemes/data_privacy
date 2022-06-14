@@ -6,8 +6,8 @@
     }
 </script>
 <?php /** @var Elemes\DataPrivacy\Block\Customer\Index $block */ ?>
-<?php
-$data = $block->getPrivacy(); ?>
+<?php $data = $block->getPrivacy(); ?>
+<?php if($block->getModuleStatus()):?>
 <fieldset class="fieldset">
     <legend class="legend"><span>
         <?php /* @escapeNotVerified */
@@ -74,3 +74,4 @@ $data = $block->getPrivacy(); ?>
         </div>
     </div>
 </fieldset>
+<?php endif;?>
